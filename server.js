@@ -34,6 +34,34 @@ app.get('/roll/:number', (req, res) => {
     }
  });
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000')
+
+
+
+ const shoes = [
+    { name: "Birkenstocks", price: 50, type: "sandal" },
+    { name: "Air Jordans", price: 500, type: "sneaker" },
+    { name: "Air Mahomeses", price: 501, type: "sneaker" },
+    { name: "Utility Boots", price: 20, type: "boot" },
+    { name: "Velcro Sandals", price: 15, type: "sandal" },
+    { name: "Jet Boots", price: 1000, type: "boot" },
+    { name: "Fifty-Inch Heels", price: 175, type: "heel" }
+];
+
+app.get('/shoes', (req, res) => {
+    let result = shoes
+    if (req.query["min-price"]) {
+    result =    result.filter(shoe => shoe.price > req.query["min-price"])
+            }
+            if (req.query["max-price"]) {
+                result =    result.filter(shoe => shoe.price < req.query["max-price"])
+                        }
+
+                        if (req.query["type"]) {
+                            result =    result.filter(shoe => shoe.type === req.query["type"])
+                                    }
+            res.send(result);
+})
+ app.listen(3000, () => {
+    console.log('Listening on port 3000')   
 });
+
